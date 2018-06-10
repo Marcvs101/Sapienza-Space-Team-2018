@@ -1,0 +1,45 @@
+//M101
+
+
+//COMANDI STANDARD DISPONIBILI SOLO NEL PRELANCIO
+Durante il volo saranno ignorati
+
+Nome		Valore
+CMD_RESET	"A1"
+CMD_SLEEP	"A2"
+CMD_WAKEUP	"A3"
+CMD_SHUTDOWN	"A4"
+CMD_SETCHAN	"A5" + ONE CHAR [1-8]
+	Alla stringa "A5" va aggiunto un carattere extra compreso tra 1 e 8 per indicare quale canale utilizzare
+
+//COMANDI DI OVERRIDE
+Disponibili durante tutte le fasi del volo + prelancio
+
+Nome			Valore
+CMD_OVRD_SETSTATE	"O1" + ONE CHAR [1-6]
+	Alla stringa "01" va aggiunto un carattere extra compreso tra 1 e 6 per indicare in quale stato si vuole saltare
+CMD_OVRD_PARACHUTE	"O2"
+CMD_OVRD_SETGROUND	"O3" 
+	Alla stringa "03" vanno aggiunti due caratteri codificati in esadecimale
+	https://stackoverflow.com/questions/3464194/how-can-i-convert-an-integer-to-a-hexadecimal-string-in-c
+CMD_OVRD_SETTIME	"O4"
+	Alla stringa "03" vanno aggiunti due caratteri codificati in esadecimale
+	https://stackoverflow.com/questions/3464194/how-can-i-convert-an-integer-to-a-hexadecimal-string-in-c
+
+La telemetria seguira' questo formato
+"<TEAM_ID>,<MISSION_TIME>,<PACKET_COUNT>,<ALT_SENSOR>,<PRESSURE>,<TEMP>,<VOLTAGE>,<GPS_TIME>,<GPS_LATITUDE>,<GPS_LONGITUDE>,<GPS_ALTITUDE>,<GPS_SATS>,<TILT_X>,<TILT_Y>,<TILT_Z>,<SOFTWARE_STATE>,<PREVIOUS_STATE>,<WIND_SPEED>"
+
+I dati in ingresso, se in esadecimale, avranno le seguenti lunghezze altrimenti ignorare il seguente paragrafo
+Per convertire da stringa esadecimale a intero si puo' usare la funzione strtol(str,NULL,16)
+1 Byte  - <SOFTWARE_STATE>,<PREVIOUS_STATE>
+2 Bytes	- <TEMP>,<VOLTAGE>,<WIND_SPEED>
+4 Bytes	- <TEAM_ID>,<MISSION_TIME>,<PACKET_COUNT>,<ALT_SENSOR>,<PRESSURE>,<GPS_TIME>
+8 Bytes	- <GPS_LATITUDE>,<GPS_LONGITUDE>,<GPS_ALTITUDE>,<TILT_X>,<TILT_Y>,<TILT_Z>
+
+Nota, se non vogliamo lavorare con i decimali i valori con la virgola verranno shiftati a sinistra di due posizioni (operazione << 2, in recezione fare >> 2 oppure /65536 )
+In caso contrario ignorare la riga sopra
+
+Consiglio di usare iterativamente la funzione strtok per recuperare i valori
+https://www.tutorialspoint.com/c_standard_library/c_function_strtok.htm
+
+In totale, con i formati proposti, la telemetria sara' una stringa lunga 68 caratteri + carriage return + terminatore (70 bytes in tutto)

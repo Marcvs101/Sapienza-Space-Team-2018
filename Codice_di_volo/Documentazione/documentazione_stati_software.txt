@@ -1,0 +1,28 @@
+//M101
+Documentazione degli stati del software
+
+//STATI ORDINARI DEL SOFTWARE
+Questi sono gli stati ordinari del software
+Durante un flusso d'esecuzione normale, il satellite visiterà almeno una volta tutti questi stati
+
+Nome			Valore
+STATE_INIT		0
+STATE_PRELAUNCH		1
+STATE_ASCENT		2
+STATE_HIGH_DESCENT	3
+STATE_TRANSITION	4
+STATE_LOW_DESCENT	5
+STATE_LANDED		6
+
+//STATI NON ORDINARI DEL SOFTWARE
+Questi sono gli stati non ordinari del software
+Durante questi stati il satellite non invierà telemetria
+Questi stati compariranno solamente nel campo PREVIOUS_STATE della telemetria
+Se uno di questi stati venisse trovato dalla stazione di terra, sarebbe opportuno notificare l'operatore del fatto che si è appena verificata un'anomalia
+Unica eccezione è lo stato STATE_HIBERNATION in cui il satellite entra in modalità risparmio energetico mandando comunque dati a terra
+Quest'ultimo stato è attivato e disattivato da terra attraverso i comandi CMD_SLEEP e CMD_WAKEUP
+
+Nome			Valore
+STATE_INTERRUPT		7
+STATE_DISASTER		8
+STATE_HIBERNATION	9

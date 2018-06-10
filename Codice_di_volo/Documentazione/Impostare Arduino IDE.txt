@@ -1,0 +1,8 @@
+Andare su file-> impostazioni
+Spuntare le caselle per i numeri di riga e per il raggruppamento del codice
+in basso cliccare sul path con le ulteriori impostazioni
+chiudere arduino ide
+aprire il file di impostazioni con il blocco note
+cambiare le linee
+- editor.tabs.expand=true -> mettere a false
+- editor.tabs.size=2 -> mettere a 4
