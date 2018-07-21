@@ -61,7 +61,7 @@ void recover_DisasterRecovery(){
 void update_DisasterRecovery(){
 	char buff[9];
 	memset(buff,'\0',9);
-	ltoa(Sistema.Altitudine,buff,10);
+	ltoa(Sistema.AltitudineTerra,buff,10);
 	for (int i=DISASTER_DISP_ALT;i<DISASTER_DISP_ALT+4;i++){
 		EEPROM.update(i,buff[i-DISASTER_DISP_ALT]);
 	}
